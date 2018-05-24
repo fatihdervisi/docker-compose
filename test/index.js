@@ -10,7 +10,6 @@ const docker = new Docker();
 
 test('ensure container gets started', async assert => {
   await compose.up({ cwd: path.join(__dirname), log: true });
-
   docker.listContainers((err, containers) => {
     const containerIsRunning = containers.find(container =>
       container.Names.includes('/compose_test_mongodb')

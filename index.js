@@ -1,7 +1,9 @@
 'use strict';
 
 const promisify = require('es6-promisify');
-const exec = promisify(require('child_process').exec, { multiArgs: true });
+const exec = promisify(require('child_process').exec, {
+  multiArgs: true
+});
 const logger = require('./lib/log');
 
 const logStandards = function (standards) {
@@ -26,8 +28,10 @@ const logStandards = function (standards) {
 const up = function (options) {
   return new Promise((resolve, reject) => {
     const cwd = options.cwd;
-
-    exec('docker-compose up -d', { cwd }).then(
+    console.log(cwd);
+    exec('docker-compose up -d', {
+      cwd
+    }).then(
       standards => {
         if (options.log) {
           logStandards(standards);
@@ -53,7 +57,9 @@ const down = function (options) {
   return new Promise((resolve, reject) => {
     const cwd = options.cwd;
 
-    exec('docker-compose down', { cwd }).then(
+    exec('docker-compose down -v', {
+      cwd
+    }).then(
       standards => {
         if (options.log) {
           logStandards(standards);
@@ -79,7 +85,9 @@ const stop = function (options) {
   return new Promise((resolve, reject) => {
     const cwd = options.cwd;
 
-    exec('docker-compose stop', { cwd }).then(
+    exec('docker-compose stop', {
+      cwd
+    }).then(
       standards => {
         if (options.log) {
           logStandards(standards);
@@ -105,7 +113,9 @@ const kill = function (options) {
   return new Promise((resolve, reject) => {
     const cwd = options.cwd;
 
-    exec('docker-compose kill', { cwd }).then(
+    exec('docker-compose kill', {
+      cwd
+    }).then(
       standards => {
         if (options.log) {
           logStandards(standards);
@@ -131,7 +141,9 @@ const rm = function (options) {
   return new Promise((resolve, reject) => {
     const cwd = options.cwd;
 
-    exec('docker-compose rm -f', { cwd }).then(
+    exec('docker-compose rm -f', {
+      cwd
+    }).then(
       standards => {
         if (options.log) {
           logStandards(standards);
@@ -148,4 +160,11 @@ const rm = function (options) {
   });
 };
 
-module.exports = { up, kill, down, stop, rm };
+module.exports = {
+  up,
+  kill,
+  down,
+  stop,
+  rm,
+  logStandards
+};
